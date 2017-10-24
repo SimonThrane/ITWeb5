@@ -34,6 +34,13 @@ namespace EmbeddedStock2
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+
+                //seed database
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetService<EmbeddedStock2Context>();
+                    context.MigrateAndSeedData();
+                }
             }
             else
             {

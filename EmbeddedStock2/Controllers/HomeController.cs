@@ -10,6 +10,12 @@ namespace EmbeddedStock2.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly EmbeddedStock2Context context;
+
+        public HomeController(EmbeddedStock2Context context)
+        {
+            this.context = context;
+        }
         public IActionResult Index()
         {
             return View();

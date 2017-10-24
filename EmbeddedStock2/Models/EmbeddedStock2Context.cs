@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace EmbeddedStock2.Models
 {
@@ -49,6 +50,20 @@ namespace EmbeddedStock2.Models
                 .WithMany(ct => ct.ComponentTypeCategory)
                 .HasForeignKey(cc => cc.ComponentTypeId);
 
+        }
+
+        public void MigrateAndSeedData()
+        {
+            if (Database.GetPendingMigrations().Any())
+            {
+                Database.Migrate();
+            }
+
+            if(!Components.Any())
+            {
+                //Seed database here
+
+            }
         }
     }
 }
