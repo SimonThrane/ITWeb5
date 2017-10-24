@@ -7,7 +7,7 @@ namespace EmbeddedStock2.Models
         public ComponentType()
         {
             Components = new List<Component>();
-            Categories = new List<Category>();
+            ComponentTypeCategory = new List<ComponentTypeCategory>();
         }
 
         public long ComponentTypeId { get; set; }
@@ -22,6 +22,6 @@ namespace EmbeddedStock2.Models
         public string AdminComment { get; set; }
         public virtual EsImage Image { get; set; }
         public ICollection<Component> Components { get; protected set; }
-        public ICollection<Category> Categories { get; protected set; }
+        public ICollection<ComponentTypeCategory> ComponentTypeCategory { get; protected set; }
     }
 }
