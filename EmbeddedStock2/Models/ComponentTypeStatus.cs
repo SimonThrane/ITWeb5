@@ -1,4 +1,4 @@
-﻿namespace Model
+﻿namespace EmbeddedStock2.Models
 {
     public enum ComponentTypeStatus
     {

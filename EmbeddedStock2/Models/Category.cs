@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Model
+namespace EmbeddedStock2.Models
 {
     public class Category
     {
