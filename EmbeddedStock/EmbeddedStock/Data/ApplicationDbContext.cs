@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using EmbeddedStock.Models;
+using Model;
 
 namespace EmbeddedStock.Data
 {
@@ -14,6 +15,11 @@ namespace EmbeddedStock.Data
             : base(options)
         {
         }
+
+        public DbSet<Component> Components { get; set; }
+        public DbSet<Category> ComponentCategories { get; set; }
+        public DbSet<ComponentType> ComponentType { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

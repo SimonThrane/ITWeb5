@@ -3711,11 +3711,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Simon\\source\\repos\\EmbeddedStock\\Model\\Model.csproj",
+      "projectUniqueName": "C:\\Users\\Simon\\Desktop\\WEB\\ASP.NET Core\\ITWeb5\\EmbeddedStock\\Model\\Model.csproj",
       "projectName": "Model",
-      "projectPath": "C:\\Users\\Simon\\source\\repos\\EmbeddedStock\\Model\\Model.csproj",
+      "projectPath": "C:\\Users\\Simon\\Desktop\\WEB\\ASP.NET Core\\ITWeb5\\EmbeddedStock\\Model\\Model.csproj",
       "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Simon\\source\\repos\\EmbeddedStock\\Model\\obj\\",
+      "outputPath": "C:\\Users\\Simon\\Desktop\\WEB\\ASP.NET Core\\ITWeb5\\EmbeddedStock\\Model\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config",

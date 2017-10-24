@@ -4245,6 +4245,19 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
+      },
+      "Model/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.4",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "bin/placeholder/Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Model.dll": {}
+        }
       }
     }
   },
@@ -10927,6 +10940,11 @@
         "system.xml.xpath.xdocument.4.0.1.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
+    },
+    "Model/1.0.0": {
+      "type": "project",
+      "path": "../Model/Model.csproj",
+      "msbuildProject": "../Model/Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -10946,7 +10964,8 @@
       "Microsoft.Extensions.Logging.Debug >= 1.1.2",
       "Microsoft.NETCore.App >= 1.1.2",
       "Microsoft.VisualStudio.Web.BrowserLink >= 1.1.2",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 1.1.1"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 1.1.1",
+      "Model >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -10958,11 +10977,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Simon\\source\\repos\\EmbeddedStock\\EmbeddedStock\\EmbeddedStock.csproj",
+      "projectUniqueName": "C:\\Users\\Simon\\Desktop\\WEB\\ASP.NET Core\\ITWeb5\\EmbeddedStock\\EmbeddedStock\\EmbeddedStock.csproj",
       "projectName": "EmbeddedStock",
-      "projectPath": "C:\\Users\\Simon\\source\\repos\\EmbeddedStock\\EmbeddedStock\\EmbeddedStock.csproj",
+      "projectPath": "C:\\Users\\Simon\\Desktop\\WEB\\ASP.NET Core\\ITWeb5\\EmbeddedStock\\EmbeddedStock\\EmbeddedStock.csproj",
       "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Simon\\source\\repos\\EmbeddedStock\\EmbeddedStock\\obj\\",
+      "outputPath": "C:\\Users\\Simon\\Desktop\\WEB\\ASP.NET Core\\ITWeb5\\EmbeddedStock\\EmbeddedStock\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -10977,7 +10996,11 @@
       },
       "frameworks": {
         "netcoreapp1.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Simon\\Desktop\\WEB\\ASP.NET Core\\ITWeb5\\EmbeddedStock\\Model\\Model.csproj": {
+              "projectPath": "C:\\Users\\Simon\\Desktop\\WEB\\ASP.NET Core\\ITWeb5\\EmbeddedStock\\Model\\Model.csproj"
+            }
+          }
         }
       }
     },
