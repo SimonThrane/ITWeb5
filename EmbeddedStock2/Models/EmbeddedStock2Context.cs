@@ -62,7 +62,54 @@ namespace EmbeddedStock2.Models
             if(!Components.Any())
             {
                 //Seed database here
-
+                var components = new Component[]
+                {
+                    new Component
+                    {
+                        AdminComment = "Første component",
+                        ComponentNumber = 1,
+                        SerialNo = "123456789",
+                        Status = ComponentStatus.Available,
+                        UserComment = "Lånt i 1 dag",
+                        CurrentLoanInformationId = null
+                    },
+                    new Component
+                    {
+                        AdminComment = "Anden component",
+                        ComponentNumber = 2,
+                        SerialNo = "234567891",
+                        Status = ComponentStatus.ReservedAdmin,
+                        UserComment = "Lånt i 2 dage",
+                        CurrentLoanInformationId = null
+                    },
+                    new Component
+                    {
+                        AdminComment = "Tredje component",
+                        ComponentNumber = 3,
+                        SerialNo = "345678912",
+                        Status = ComponentStatus.Available,
+                        UserComment = "Lånt i 3 dage",
+                        CurrentLoanInformationId = null
+                    },
+                    new Component
+                    {
+                        AdminComment = "Fjerde component",
+                        ComponentNumber = 4,
+                        SerialNo = "456789123",
+                        Status = ComponentStatus.Defect,
+                        UserComment = "I stykker",
+                        CurrentLoanInformationId = null
+                    },
+                    new Component
+                    {
+                        AdminComment = "Femte component",
+                        ComponentNumber = 5,
+                        SerialNo = "567891234",
+                        Status = ComponentStatus.Available,
+                        UserComment = "Lånt i 5 dage",
+                        CurrentLoanInformationId = null
+                    }
+                };
             }
         }
     }
