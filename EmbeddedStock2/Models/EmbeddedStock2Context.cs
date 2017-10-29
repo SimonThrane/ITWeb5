@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using FreeImageAPI;
 
 namespace EmbeddedStock2.Models
 {
@@ -62,6 +65,56 @@ namespace EmbeddedStock2.Models
             if(!Components.Any())
             {
                 //Seed database here
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), @".\seedImages\pump.jpg");
+                var esImage = new EsImage
+                {
+                    ImageMimeType = "image/jpeg",
+                    ImageData = Util.Util.ImageToByteArray(imagePath, FREE_IMAGE_FORMAT.FIF_JPEG),
+                    Thumbnail = Util.Util.ThumbNailByteArray(imagePath, FREE_IMAGE_FORMAT.FIF_JPEG)
+                };
+
+                var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), @"..\seedImages\pump2.jpg");
+                var esImage2 = new EsImage
+                {
+                    ImageMimeType = "image/jpeg",
+                    ImageData = Util.Util.ImageToByteArray(imagePath, FREE_IMAGE_FORMAT.FIF_JPEG),
+                    Thumbnail = Util.Util.ThumbNailByteArray(imagePath, FREE_IMAGE_FORMAT.FIF_JPEG)
+                };
+
+                var componentTypes = new[]
+                {
+                    new ComponentType
+                    {
+                        ComponentName = "Pumpe",
+                        AdminComment = "",
+                        ComponentInfo = "",
+                        Datasheet = "Datasheet",
+                        Status = ComponentTypeStatus.Available,
+                        Location = "Kontoret",
+                        Manufacturer = "Skolen",
+                        WikiLink = "https://da.wikipedia.org/wiki/Pumpe",
+                        ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Drehkolbenpumpe.jpg/220px-Drehkolbenpumpe.jpg",
+                        Image = esImage
+                    },
+                    new ComponentType
+                    {
+                        ComponentName = "Pumpe2",
+                        AdminComment = "",
+                        ComponentInfo = "",
+                        Datasheet = "Datasheet",
+                        Status = ComponentTypeStatus.Available,
+                        Location = "Kontoret",
+                        Manufacturer = "Skolen",
+                        WikiLink = "https://da.wikipedia.org/wiki/Pumpe",
+                        ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Drehkolbenpumpe.jpg/220px-Drehkolbenpumpe.jpg",
+                        Image = esImage2
+                    }
+                };
+
+                ComponentTypes.AddRange(componentTypes);
+                SaveChanges();
+
+
                 var components = new Component[]
                 {
                     new Component
@@ -75,7 +128,7 @@ namespace EmbeddedStock2.Models
                     },
                     new Component
                     {
-                        AdminComment = "DevKit",
+                        AdminComment = "Pumpe",
                         ComponentNumber = 2,
                         SerialNo = "234567891",
                         Status = ComponentStatus.ReservedAdmin,
@@ -84,7 +137,7 @@ namespace EmbeddedStock2.Models
                     },
                     new Component
                     {
-                        AdminComment = "Motor",
+                        AdminComment = "Pumpe",
                         ComponentNumber = 3,
                         SerialNo = "345678912",
                         Status = ComponentStatus.Available,
@@ -111,34 +164,12 @@ namespace EmbeddedStock2.Models
                     }
                 };
 
-                var esImage = new EsImage
+                var currentComponentType = ComponentTypes.FirstOrDefault();
+                foreach (var component in components)
                 {
-                    ImageMimeType = "image/jpeg",
-
-                };
-
-                using (var image = new Bitmap(System.Drawing.Image.FromFile(inputPath)))
-                {
-
+                    currentComponentType.Components.Add(component);
                 }
-
-                    var componentTypes = new ComponentType[]
-                {
-                    new ComponentType
-                    {
-                        ComponentName = "Pumpe",
-                        AdminComment = "",
-                        ComponentInfo = "",
-                        Datasheet = "Datasheet",
-                        Status = ComponentTypeStatus.Available,
-                        Location = "Kontoret",
-                        Manufacturer = "Skolen",
-                        WikiLink = "https://da.wikipedia.org/wiki/Pumpe",
-                        ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Drehkolbenpumpe.jpg/220px-Drehkolbenpumpe.jpg",
-                        Image = 
-                        
-                    }
-                };
+                SaveChanges();
             }
         }
     }
