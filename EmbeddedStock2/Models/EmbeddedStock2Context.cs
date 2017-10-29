@@ -170,6 +170,33 @@ namespace EmbeddedStock2.Models
                     currentComponentType.Components.Add(component);
                 }
                 SaveChanges();
+
+                var categories = new[]
+                {
+                    new Category
+                    {
+                        Name = "Motordrevet"
+                    },
+                    new Category
+                    {
+                        Name = "Elektronik"
+                    }
+                };
+
+                Categories.AddRange(categories);
+                SaveChanges();
+
+                var componentTypeCategoies = new[]
+                {
+                    new ComponentTypeCategory
+                    {
+                        ComponentType = ComponentTypes.FirstOrDefault(),
+                        Category = Categories.FirstOrDefault()
+                    }
+                };
+
+                ComponentTypeCategory.AddRange(componentTypeCategoies);
+                SaveChanges();
             }
         }
     }
