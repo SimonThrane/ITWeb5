@@ -21,7 +21,7 @@ namespace EmbeddedStock2.Controllers
         // GET: ComponentTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ComponentTypes.ToListAsync());
+            return View(await _context.ComponentTypes.Include(ct => ct.Image).ToListAsync());
         }
 
         // GET: ComponentTypes/Details/5
@@ -33,6 +33,7 @@ namespace EmbeddedStock2.Controllers
             }
 
             var componentType = await _context.ComponentTypes
+                .Include(ct => ct.Image)
                 .SingleOrDefaultAsync(m => m.ComponentTypeId == id);
             if (componentType == null)
             {

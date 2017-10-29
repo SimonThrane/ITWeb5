@@ -47,6 +47,12 @@
             @Html.DisplayFor(model => model.ImageUrl)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd>
+            <img src="@String.Format("data:{0};base64,{1}",Model.Image.ImageMimeType,Convert.ToBase64String(Model.Image.ImageData))" />
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Manufacturer)
         </dt>
         <dd>
