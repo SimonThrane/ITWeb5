@@ -66,7 +66,7 @@ namespace EmbeddedStock2.Models
                 {
                     new Component
                     {
-                        AdminComment = "Første component",
+                        AdminComment = "Pumpe",
                         ComponentNumber = 1,
                         SerialNo = "123456789",
                         Status = ComponentStatus.Available,
@@ -75,7 +75,7 @@ namespace EmbeddedStock2.Models
                     },
                     new Component
                     {
-                        AdminComment = "Anden component",
+                        AdminComment = "DevKit",
                         ComponentNumber = 2,
                         SerialNo = "234567891",
                         Status = ComponentStatus.ReservedAdmin,
@@ -84,7 +84,7 @@ namespace EmbeddedStock2.Models
                     },
                     new Component
                     {
-                        AdminComment = "Tredje component",
+                        AdminComment = "Motor",
                         ComponentNumber = 3,
                         SerialNo = "345678912",
                         Status = ComponentStatus.Available,
@@ -93,7 +93,7 @@ namespace EmbeddedStock2.Models
                     },
                     new Component
                     {
-                        AdminComment = "Fjerde component",
+                        AdminComment = "Pumpe",
                         ComponentNumber = 4,
                         SerialNo = "456789123",
                         Status = ComponentStatus.Defect,
@@ -102,12 +102,41 @@ namespace EmbeddedStock2.Models
                     },
                     new Component
                     {
-                        AdminComment = "Femte component",
+                        AdminComment = "Pumpe",
                         ComponentNumber = 5,
                         SerialNo = "567891234",
                         Status = ComponentStatus.Available,
                         UserComment = "Lånt i 5 dage",
                         CurrentLoanInformationId = null
+                    }
+                };
+
+                var esImage = new EsImage
+                {
+                    ImageMimeType = "image/jpeg",
+
+                };
+
+                using (var image = new Bitmap(System.Drawing.Image.FromFile(inputPath)))
+                {
+
+                }
+
+                    var componentTypes = new ComponentType[]
+                {
+                    new ComponentType
+                    {
+                        ComponentName = "Pumpe",
+                        AdminComment = "",
+                        ComponentInfo = "",
+                        Datasheet = "Datasheet",
+                        Status = ComponentTypeStatus.Available,
+                        Location = "Kontoret",
+                        Manufacturer = "Skolen",
+                        WikiLink = "https://da.wikipedia.org/wiki/Pumpe",
+                        ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Drehkolbenpumpe.jpg/220px-Drehkolbenpumpe.jpg",
+                        Image = 
+                        
                     }
                 };
             }
