@@ -33,5 +33,22 @@ namespace EmbeddedStock2.Util
                 }
             }
         }
+
+        public static FREE_IMAGE_FORMAT FindImageFormat(string contentType)
+        {
+            switch (contentType)
+            {
+                case "image/jpeg":
+                    return FREE_IMAGE_FORMAT.FIF_JPEG;
+                case "image/gif":
+                    return FREE_IMAGE_FORMAT.FIF_GIF;
+                case "image/png":
+                    return FREE_IMAGE_FORMAT.FIF_PNG;
+                case "image/bmp":
+                    return FREE_IMAGE_FORMAT.FIF_BMP;
+                default:
+                    throw new Exception("Unknown image mimetype");
+            }
+        }
     }
 }
