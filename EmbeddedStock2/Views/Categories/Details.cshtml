@@ -16,6 +16,15 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt>
+            Component types in category
+        </dt>
+        <dd>
+            @foreach (var ct in Model.ComponentTypeCategory)
+            {
+                <a href="@Url.Action("Details","ComponentTypes", new {id = ct.ComponentType.ComponentTypeId})">@ct.ComponentType.ComponentName</a>
+            }
+        </dd>
     </dl>
 </div>
 <div>

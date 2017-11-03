@@ -33,6 +33,8 @@ namespace EmbeddedStock2.Controllers
             }
 
             var category = await _context.Categories
+                .Include(c => c.ComponentTypeCategory)
+                .ThenInclude(ct => ct.ComponentType)
                 .SingleOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
