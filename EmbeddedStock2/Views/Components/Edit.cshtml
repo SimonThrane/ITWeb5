@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="ComponentId" />
             <div class="form-group">
                 <label asp-for="ComponentTypeId" class="control-label"></label>
-                <select asp-for="ComponentTypeId" class="form-control" asp-items="ViewBag.ComponentTypeId"></select>
+                <select asp-for="ComponentTypeId" class="form-control" asp-items="ViewBag.ComponentTypes"></select>
                 <span asp-validation-for="ComponentTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -30,8 +30,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <select asp-for="Status" class="form-control" asp-items="@new SelectList(Enum.GetNames(typeof(ComponentStatus)))">
+                    <option disabled selected value="">Select a componentStatus</option>
+                </select>                <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AdminComment" class="control-label"></label>

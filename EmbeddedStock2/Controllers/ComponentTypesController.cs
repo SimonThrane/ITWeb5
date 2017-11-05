@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EmbeddedStock2.Models;
+using FreeImageAPI;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace EmbeddedStock2.Controllers
 {
@@ -19,9 +23,17 @@ namespace EmbeddedStock2.Controllers
         }
 
         // GET: ComponentTypes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int categoryId)
         {
-            return View(await _context.ComponentTypes.Include(ct => ct.Image).ToListAsync());
+            ViewBag.Categories = _context.Categories
+                .Select(c => new SelectListItem() { Text = c.Name, Value = c.CategoryId.ToString() })
+                .ToList();
+            var componentTypes = _context.ComponentTypes.AsQueryable();
+            if (categoryId != 0)
+            {
+                componentTypes = componentTypes.Where(c => c.ComponentTypeCategory.Any(o => o.CategoryId == categoryId));
+            }
+            return View(await componentTypes.AsNoTracking().Include(ct => ct.Image).ToListAsync());
         }
 
         // GET: ComponentTypes/Details/5
@@ -35,6 +47,8 @@ namespace EmbeddedStock2.Controllers
             var componentType = await _context.ComponentTypes
                 .Include(ct => ct.Image)
                 .SingleOrDefaultAsync(m => m.ComponentTypeId == id);
+
+
             if (componentType == null)
             {
                 return NotFound();
@@ -46,6 +60,9 @@ namespace EmbeddedStock2.Controllers
         // GET: ComponentTypes/Create
         public IActionResult Create()
         {
+            this.ViewData["categories"] = _context.Categories
+                .Select(c => new SelectListItem() { Text = c.Name, Value = c.CategoryId.ToString() })
+                .ToList();
             return View();
         }
 
@@ -73,7 +90,10 @@ namespace EmbeddedStock2.Controllers
                 return NotFound();
             }
 
-            var componentType = await _context.ComponentTypes.SingleOrDefaultAsync(m => m.ComponentTypeId == id);
+            var componentType = await _context.ComponentTypes.Include(c => c.Image).SingleOrDefaultAsync(m => m.ComponentTypeId == id);
+            this.ViewData["categories"] = _context.Categories
+                .Select(c => new SelectListItem() { Text = c.Name, Value = c.CategoryId.ToString() })
+                .ToList();
             if (componentType == null)
             {
                 return NotFound();
@@ -86,8 +106,9 @@ namespace EmbeddedStock2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ComponentTypeId,ComponentName,ComponentInfo,Location,Status,Datasheet,ImageUrl,Manufacturer,WikiLink,AdminComment")] ComponentType componentType)
+        public async Task<IActionResult> Edit(long id, ComponentType componentType, IFormFile imageFile)
         {
+
             if (id != componentType.ComponentTypeId)
             {
                 return NotFound();
@@ -97,6 +118,25 @@ namespace EmbeddedStock2.Controllers
             {
                 try
                 {
+                    if (imageFile.Length > 0)
+                    {
+                        var stream = imageFile.OpenReadStream();
+                        var bitmap = FreeImageBitmap.FromStream(stream);
+                        var thumbnail = bitmap.GetThumbnailImage(1000, true);
+
+                        using (var m = new MemoryStream())
+                        {
+                            bitmap.Save(m, format: bitmap.ImageFormat);
+                            componentType.Image.ImageData = m.ToArray();
+                            
+                        }
+                        using (var m = new MemoryStream())
+                        {
+                            thumbnail.Save(m, format: FREE_IMAGE_FORMAT.FIF_JPEG);
+                            componentType.Image.Thumbnail = m.ToArray();
+                        }
+                    }
+
                     _context.Update(componentType);
                     await _context.SaveChangesAsync();
                 }

@@ -21,6 +21,7 @@ namespace EmbeddedStock2.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.Categories.ToListAsync());
         }
 
@@ -47,6 +48,12 @@ namespace EmbeddedStock2.Controllers
         // GET: Categories/Create
         public IActionResult Create()
         {
+            ViewBag.ComponentTypes = _context.ComponentTypes.Select(c => new SelectListItem()
+            {
+                Text = c.ComponentName, Value = c.ComponentTypeId.ToString() 
+                
+            });
+
             return View();
         }
 

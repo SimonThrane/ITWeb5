@@ -19,9 +19,17 @@ namespace EmbeddedStock2.Controllers
         }
 
         // GET: Components
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int componentTypeId)
         {
-            return View(await _context.Components.ToListAsync());
+            ViewBag.ComponentTypes = _context.ComponentTypes
+                .Select(c => new SelectListItem() { Text = c.ComponentName, Value = c.ComponentTypeId.ToString() })
+                .ToList();
+            var component = _context.Components.AsQueryable();
+            if (componentTypeId != 0)
+            {
+                component = component.Where(c => c.ComponentTypeId == componentTypeId);
+            }
+            return View(await component.AsNoTracking().ToListAsync());
         }
 
         // GET: Components/Details/5
@@ -45,8 +53,12 @@ namespace EmbeddedStock2.Controllers
         // GET: Components/Create
         public IActionResult Create()
         {
-            ViewBag.ComponentTypes = new SelectList(_context.Categories
-                .Select(c => c.Name).Distinct());
+            ViewBag.ComponentTypes = _context.ComponentTypes.Select(c => new SelectListItem()
+            {
+                Text = c.ComponentName,
+                Value = c.ComponentTypeId.ToString()
+
+            });
             return View();
         }
 
@@ -79,6 +91,12 @@ namespace EmbeddedStock2.Controllers
             {
                 return NotFound();
             }
+            ViewBag.ComponentTypes = _context.ComponentTypes.Select(c => new SelectListItem()
+            {
+                Text = c.ComponentName,
+                Value = c.ComponentTypeId.ToString()
+
+            });
             return View(component);
         }
 

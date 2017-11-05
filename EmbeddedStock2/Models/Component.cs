@@ -14,6 +14,7 @@ namespace EmbeddedStock2.Models
         [Display(Name = "Comment")]
         public string AdminComment { get; set; }
         public string UserComment { get; set; }
+        [Display(Name = "Loaner ID")]
         public long? CurrentLoanInformationId { get; set; }
     }
 }
