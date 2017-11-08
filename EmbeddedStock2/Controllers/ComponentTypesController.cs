@@ -64,9 +64,12 @@ namespace EmbeddedStock2.Controllers
             var categories = _context.Categories
                 .Select(c => new SelectListItem() { Text = c.Name, Value = c.CategoryId.ToString() })
                 .ToList();
-
-            ViewData["categories"] = categories;
-            return View();
+            if (categories.Count > 0)
+            {
+                ViewData["categories"] = categories;
+                return View();
+            }
+            return View("NoCategories");
         }
 
         // POST: ComponentTypes/Create

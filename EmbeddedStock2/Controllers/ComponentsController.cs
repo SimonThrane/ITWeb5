@@ -53,13 +53,18 @@ namespace EmbeddedStock2.Controllers
         // GET: Components/Create
         public IActionResult Create()
         {
-            ViewBag.ComponentTypes = _context.ComponentTypes.Select(c => new SelectListItem()
+            var componentTypes = _context.ComponentTypes.Select(c => new SelectListItem()
             {
                 Text = c.ComponentName,
                 Value = c.ComponentTypeId.ToString()
 
             });
-            return View();
+            if (componentTypes.Count() > 0)
+            {
+                ViewBag.ComponentTypes = componentTypes;
+                return View();
+            }
+            return View("NoComponentTypes");
         }
 
         // POST: Components/Create
