@@ -19,6 +19,6 @@ namespace EmbeddedStock2.ViewModels
         public string WikiLink { get; set; }
         public string AdminComment { get; set; }
         public IFormFile ImageUpload { get; set; }
-        public string Category { get; set; }
+        public int Category { get; set; }
     }
 }

@@ -116,8 +116,15 @@ namespace EmbeddedStock2.Controllers
                             ImageMimeType = componentTypeViewModel.ImageUpload.ContentType
                         }
                     };
-                _context.Add(componentType);
-                await _context.SaveChangesAsync();
+                var category = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryId == componentTypeViewModel.Category);
+                if (category != null)
+                {
+                    _context.Add(componentType);
+                    await _context.SaveChangesAsync();
+
+                    _context.Add(new ComponentTypeCategory { Category = category, ComponentType = componentType });
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(componentTypeViewModel);
