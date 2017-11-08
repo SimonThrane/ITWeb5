@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EmbeddedStock2.Models;
+using EmbeddedStock2.ViewModels;
 using FreeImageAPI;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
@@ -60,9 +61,11 @@ namespace EmbeddedStock2.Controllers
         // GET: ComponentTypes/Create
         public IActionResult Create()
         {
-            this.ViewData["categories"] = _context.Categories
+            var categories = _context.Categories
                 .Select(c => new SelectListItem() { Text = c.Name, Value = c.CategoryId.ToString() })
                 .ToList();
+
+            ViewData["categories"] = categories;
             return View();
         }
 
@@ -71,15 +74,53 @@ namespace EmbeddedStock2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ComponentTypeId,ComponentName,ComponentInfo,Location,Status,Datasheet,ImageUrl,Manufacturer,WikiLink,AdminComment")] ComponentType componentType)
+        public async Task<IActionResult> Create(CreateComponentTypeViewModel componentTypeViewModel)
         {
             if (ModelState.IsValid)
             {
+                //Make image
+                byte[] image;
+                byte[] thumbnail;
+                using (var m = new MemoryStream())
+                {
+                    await componentTypeViewModel.ImageUpload.CopyToAsync(m);
+                    image = m.ToArray();
+                }
+                //Make thumbnail
+                using (var m = new MemoryStream())
+                {
+                    await componentTypeViewModel.ImageUpload.CopyToAsync(m);
+                    using (var ti = new FreeImageBitmap(componentTypeViewModel.ImageUpload.OpenReadStream()))
+                    {
+                        var thumb = ti.GetThumbnailImage(100, true);
+                        using (var nm = new MemoryStream())
+                        {
+                            thumb.Save(nm,Util.Util.FindImageFormat(componentTypeViewModel.ImageUpload.ContentType));
+                            thumbnail = nm.ToArray();
+                        }
+                    }
+                } 
+                    var componentType = new ComponentType
+                    {
+                        ComponentName = componentTypeViewModel.ComponentName,
+                        AdminComment = componentTypeViewModel.AdminComment,
+                        ComponentInfo = componentTypeViewModel.ComponentInfo,
+                        Datasheet = componentTypeViewModel.Datasheet,
+                        Location = componentTypeViewModel.Location,
+                        WikiLink = componentTypeViewModel.WikiLink,
+                        Manufacturer = componentTypeViewModel.Manufacturer,
+                        Image = new EsImage
+                        {
+                            ImageData = image,
+                            Thumbnail = thumbnail,
+                            ImageMimeType = componentTypeViewModel.ImageUpload.ContentType
+                        }
+                    };
                 _context.Add(componentType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(componentType);
+            return View(componentTypeViewModel);
         }
 
         // GET: ComponentTypes/Edit/5
